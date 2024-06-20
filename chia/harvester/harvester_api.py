@@ -198,6 +198,7 @@ class HarvesterAPI:
                                     ),
                                 )
                             )
+                            break
                 return responses
             except Exception as e:
                 self.harvester.log.error(f"Unknown error: {e}")
