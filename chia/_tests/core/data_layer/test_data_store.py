@@ -101,7 +101,7 @@ async def test_create_creates_tables_and_columns(
 
 @pytest.mark.anyio
 async def test_create_tree_accepts_bytes32(raw_data_store: DataStore) -> None:
-    store_id = bytes32(b"\0" * 32)
+    store_id = bytes32.zeros
 
     await raw_data_store.create_tree(store_id=store_id)
 
@@ -1647,7 +1647,7 @@ async def test_benchmark_batch_insert_speed_multiple_batches(
 
 @pytest.mark.anyio
 async def test_delete_store_data(raw_data_store: DataStore) -> None:
-    store_id = bytes32(b"\0" * 32)
+    store_id = bytes32.zeros
     store_id_2 = bytes32(b"\0" * 31 + b"\1")
     await raw_data_store.create_tree(store_id=store_id, status=Status.COMMITTED)
     await raw_data_store.create_tree(store_id=store_id_2, status=Status.COMMITTED)
