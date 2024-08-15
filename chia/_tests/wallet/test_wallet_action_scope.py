@@ -15,7 +15,7 @@ from chia.wallet.util.tx_config import DEFAULT_TX_CONFIG
 from chia.wallet.wallet_action_scope import WalletSideEffects
 from chia.wallet.wallet_state_manager import WalletStateManager
 
-MOCK_SR = SigningResponse(b"hey", bytes32([0] * 32))
+MOCK_SR = SigningResponse(b"hey", bytes32.zeros)
 MOCK_SB = SpendBundle([], G2Element())
 
 

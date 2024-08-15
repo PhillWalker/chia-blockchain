@@ -312,7 +312,7 @@ def test_dao_proposals(capsys: object, get_test_cli_clients: Tuple[TestRpcClient
             reuse_puzhash: Optional[bool] = None,
             push: bool = True,
         ) -> DAOCreateProposalResponse:
-            return DAOCreateProposalResponse([STD_UTX], [STD_TX], bytes32([0] * 32), STD_TX.name, STD_TX)
+            return DAOCreateProposalResponse([STD_UTX], [STD_TX], bytes32.zeros, STD_TX.name, STD_TX)
 
         async def get_wallets(self, wallet_type: Optional[WalletType] = None) -> List[Dict[str, Union[str, int]]]:
             return [{"id": 1, "type": 0}, {"id": 2, "type": 14}]
@@ -424,7 +424,7 @@ def test_dao_proposals(capsys: object, get_test_cli_clients: Tuple[TestRpcClient
         "-m 0.1",
         "--reuse",
     ]
-    proposal_asserts = ["Successfully created proposal", f"Proposal ID: {bytes32([0] * 32).hex()}"]
+    proposal_asserts = ["Successfully created proposal", f"Proposal ID: {bytes32.zeros.hex()}"]
     run_cli_command_and_assert(capsys, root_dir, spend_args, proposal_asserts)
 
     bad_spend_args = [
@@ -442,7 +442,7 @@ def test_dao_proposals(capsys: object, get_test_cli_clients: Tuple[TestRpcClient
         "-m 0.1",
         "--reuse",
     ]
-    proposal_asserts = ["Successfully created proposal", f"Proposal ID: {bytes32([0] * 32).hex()}"]
+    proposal_asserts = ["Successfully created proposal", f"Proposal ID: {bytes32.zeros.hex()}"]
     with pytest.raises(ValueError) as e_info:
         run_cli_command_and_assert(capsys, root_dir, bad_spend_args, proposal_asserts)
     assert e_info.value.args[0] == "Must include a json specification or an address / amount pair."

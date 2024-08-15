@@ -311,7 +311,7 @@ async def test_send_transaction(wallet_rpc_environment: WalletRpcTestEnvironment
 
     # Tests sending a basic transaction
     extra_conditions = (Remark(Program.to(("test", None))),)
-    non_existent_coin = Coin(bytes32([0] * 32), bytes32([0] * 32), uint64(0))
+    non_existent_coin = Coin(bytes32.zeros, bytes32.zeros, uint64(0))
     tx_no_push = (
         await client.send_transaction(
             1,
@@ -479,7 +479,7 @@ async def test_get_farmed_amount_with_fee(wallet_rpc_environment: WalletRpcTestE
     async with wallet.wallet_state_manager.new_action_scope(DEFAULT_TX_CONFIG, push=True) as action_scope:
         await wallet.generate_signed_transaction(
             amount=uint64(5),
-            puzzle_hash=bytes32([0] * 32),
+            puzzle_hash=bytes32.zeros,
             action_scope=action_scope,
             fee=uint64(fee_amount),
         )
@@ -1050,7 +1050,7 @@ async def test_cat_endpoints(wallet_rpc_environment: WalletRpcTestEnvironment):
     wid, name = result
     assert wid == cat_0_id
     assert name == "My cat"
-    result = await client.cat_asset_id_to_name(bytes32([0] * 32))
+    result = await client.cat_asset_id_to_name(bytes32.zeros)
     assert result is None
     verified_asset_id = next(iter(DEFAULT_CATS.items()))[1]["asset_id"]
     result = await client.cat_asset_id_to_name(bytes32.from_hexstr(verified_asset_id))
@@ -1101,7 +1101,7 @@ async def test_cat_endpoints(wallet_rpc_environment: WalletRpcTestEnvironment):
             cat_0_id,
             DEFAULT_TX_CONFIG.override(
                 excluded_coin_amounts=[uint64(20)],
-                excluded_coin_ids=[bytes32([0] * 32)],
+                excluded_coin_ids=[bytes32.zeros],
             ),
             uint64(4),
             addr_1,
@@ -1376,7 +1376,7 @@ async def test_offer_endpoints(wallet_rpc_environment: WalletRpcTestEnvironment)
         driver_dict=driver_dict,
     )
     assert len([o for o in await wallet_1_rpc.get_all_offers() if o.status == TradeStatus.PENDING_ACCEPT.value]) == 1
-    await wallet_1_rpc.cancel_offers(DEFAULT_TX_CONFIG, asset_id=bytes32([0] * 32))
+    await wallet_1_rpc.cancel_offers(DEFAULT_TX_CONFIG, asset_id=bytes32.zeros)
     assert len([o for o in await wallet_1_rpc.get_all_offers() if o.status == TradeStatus.PENDING_ACCEPT.value]) == 1
     await wallet_1_rpc.cancel_offers(DEFAULT_TX_CONFIG, asset_id=cat_asset_id)
     assert len([o for o in await wallet_1_rpc.get_all_offers() if o.status == TradeStatus.PENDING_ACCEPT.value]) == 0
